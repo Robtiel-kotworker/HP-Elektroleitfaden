@@ -1,0 +1,18 @@
+{
+  // Assets-only Worker: die App ist reines HTML/CSS/JS ohne Build-Schritt,
+  // daher gibt es keinen Worker-Einstiegspunkt ("main" entfällt).
+  //
+  // "name" muss exakt dem Worker im Cloudflare-Dashboard entsprechen –
+  // sonst lädt "wrangler versions upload" in einen anderen Worker hoch.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hp-elektroleitfaden",
+  "compatibility_date": "2026-08-20",
+  "assets": {
+    // Nur der Inhalt von public/ wird veröffentlicht. Alles außerhalb
+    // (README, diese Datei, .git) bleibt damit zuverlässig unveröffentlicht.
+    "directory": "./public",
+    // Die App nutzt Hash-Routing (#/pfad). Unbekannte Pfade liefern damit
+    // die App statt eines harten 404.
+    "not_found_handling": "single-page-application"
+  }
+}
