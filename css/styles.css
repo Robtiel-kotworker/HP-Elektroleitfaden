@@ -608,11 +608,12 @@ button:disabled {
   border: 1px solid var(--border);
 }
 
+/* Schmale Displays: Bezeichnung über Wert. Ab 640 px nebeneinander
+   (siehe Media Query am Dateiende). */
 .terminal-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  flex-direction: column;
+  gap: 2px;
   padding: 12px 12px;
   border-radius: var(--radius-sm);
   background: var(--bg-raised);
@@ -620,15 +621,18 @@ button:disabled {
 }
 
 .terminal-row__label {
+  min-width: 0;
   font-size: 0.88rem;
   color: var(--text-muted);
+  overflow-wrap: break-word;
 }
 
 .terminal-row__value {
+  min-width: 0;
   font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.92rem;
-  text-align: right;
+  overflow-wrap: break-word;
 }
 
 /* Kabel-Liste im Klemmennummerierungs-Stil */
@@ -682,6 +686,39 @@ button:disabled {
 .cable-item__anschlussort {
   font-size: 0.85rem;
   color: var(--text-muted);
+}
+
+/* Ader-zu-Klemme-Zuordnung innerhalb einer Kabelzeile.
+   Schmale Displays: gestapelt. Ab 640 px zweispaltig (siehe Media Query). */
+.klemmen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  margin: 8px 0 2px;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-panel-alt);
+  border: 1px solid var(--border);
+}
+
+.klemmen__ader {
+  padding: 6px 8px 2px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border-left: 3px solid var(--accent);
+  background: var(--bg-raised);
+  overflow-wrap: anywhere;
+}
+
+.klemmen__ziel {
+  margin: 0;
+  padding: 0 8px 6px 11px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+  background: var(--bg-raised);
+  overflow-wrap: anywhere;
 }
 
 .cable-item__hinweis {
@@ -769,5 +806,32 @@ button:disabled {
   .stepper__item.is-active .stepper__index {
     background: var(--accent);
     color: var(--accent-ink);
+  }
+
+  .terminal-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .terminal-row__value {
+    text-align: right;
+  }
+
+  .klemmen {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+    align-items: stretch;
+  }
+
+  .klemmen__ader {
+    padding: 6px 8px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .klemmen__ziel {
+    padding: 6px 8px;
+    text-align: right;
+    border-radius: 0 4px 4px 0;
   }
 }

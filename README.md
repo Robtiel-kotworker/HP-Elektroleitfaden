@@ -57,9 +57,9 @@ Anschließend `http://localhost:<port>/` im Browser öffnen.
 - **Ergebnisliste / Suche:** Klick auf ein Datenblatt öffnet es in einem
   neuen Browser-Tab (`window.open`, keine Download-Funktion).
 - **Datenblatt-Detailseite:** Absicherung als „Klemmleiste“, benötigte
-  Kabel mit Verwendung, Kabeltyp und Anschlussort. Ist ein Datenblatt
-  noch nicht gepflegt, wird ein Platzhalterhinweis angezeigt – die Route
-  existiert bereits.
+  Kabel mit Verwendung, Kabeltyp, Anschlussort und – sofern gepflegt – der
+  genauen Ader-zu-Klemme-Zuordnung. Ist ein Datenblatt noch nicht gepflegt,
+  wird ein Platzhalterhinweis angezeigt – die Route existiert bereits.
 
 ## Neue Datenblätter / Zusatzinstallationen ergänzen
 
@@ -81,14 +81,35 @@ muss angefasst werden:
     kurzbeschreibung: '…',
     absicherung: [{ bezeichnung: '…', wert: '…' }],
     kabel: [
-      { verwendung: '…', kabeltyp: '…', anschlussort: '…', hinweis: '…' },
+      {
+        verwendung: '…',
+        kabeltyp: '…',
+        anschlussort: '…',
+        // optional: Ader-zu-Klemme-Zuordnung, wird als Klemmenliste gerendert
+        klemmen: [{ ader: 'Außenleiter L1', klemme: 'X1: L' }],
+        hinweis: '…',
+      },
     ],
     hinweise: ['…'],
   }
   ```
 
-Aktuell vollständig gepflegt: **Bosch Außeneinheit** und
-**Bosch Compress-Inneneinheit**. Alle übrigen Datenblätter (Nibe,
-Unterverteilung-Details, Ext. APZ-Feld, Bosch Energie Management,
-§14a-/SG-Ready-Steuerbox, PV-Wechselrichter-Kommunikation) sind als
-Platzhalter angelegt.
+  `anschlussort` beschreibt, **wo** angeschlossen wird (Gerät, Platine,
+  Klemmenkasten), `klemmen` **welche Ader auf welche Klemme** geht. Fehlt
+  `klemmen`, wird die Kabelzeile unverändert ohne Klemmenliste dargestellt.
+
+## Datenstand der Datenblätter
+
+Vollständig gepflegt sind die Basisgeräte beider Hersteller:
+
+| Datenblatt | Gerät | Quelle |
+| --- | --- | --- |
+| `bosch-aussen` | Compress CS5800i AW, Außeneinheit AW 4 \| 5 \| 7 OR-S | Installationsanleitung 6721840669 |
+| `bosch-innen` | Compress CS5800i AW, Inneneinheit CS5800iAW 12 E/M | Installationsanleitung 6721830740 |
+| `nibe-aussen` | NIBE S2125 (SMO- und Standard-Regelung) | Installateurhandbuch 631676 |
+| `nibe-vvm-s320` | NIBE VVM S320 (Standard-Regelung) | Installateurhandbuch 531158 |
+| `nibe-smo-s40` | NIBE SMO S40 (SMO-Regelung) | Installateurhandbuch 631927 |
+
+Die Zusatzinstallationen sind bis auf die Unterverteilung noch Platzhalter:
+Ext. APZ-Feld, Bosch Energie Management, §14a-/SG-Ready-Steuerbox und
+PV-Wechselrichter-Kommunikation.

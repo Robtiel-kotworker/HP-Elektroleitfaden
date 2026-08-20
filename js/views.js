@@ -429,6 +429,18 @@ function specTable(rows) {
   );
 }
 
+/** Ader-zu-Klemme-Zuordnung einer einzelnen Leitung. */
+function klemmenList(klemmen) {
+  return el(
+    'dl',
+    { class: 'klemmen' },
+    klemmen.flatMap((klemme) => [
+      el('dt', { class: 'klemmen__ader', text: klemme.ader }),
+      el('dd', { class: 'klemmen__ziel', text: klemme.klemme }),
+    ])
+  );
+}
+
 function cableTable(rows) {
   return el(
     'div',
@@ -440,6 +452,7 @@ function cableTable(rows) {
           el('p', { class: 'cable-item__verwendung', text: row.verwendung }),
           el('p', { class: 'cable-item__kabeltyp', text: row.kabeltyp }),
           el('p', { class: 'cable-item__anschlussort', text: `Anschluss: ${row.anschlussort}` }),
+          row.klemmen && row.klemmen.length ? klemmenList(row.klemmen) : null,
           row.hinweis ? el('p', { class: 'cable-item__hinweis', text: row.hinweis }) : null,
         ]),
       ])
